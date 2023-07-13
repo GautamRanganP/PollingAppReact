@@ -5,7 +5,6 @@ import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
-// import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
@@ -15,6 +14,8 @@ import CircularProgess from '@mui/material/CircularProgress'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../feature/UserSlice'
 
 function Copyright (props) {
   return (
@@ -34,6 +35,7 @@ const theme = createTheme()
 export default function LoginAdmin () {
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -58,6 +60,8 @@ export default function LoginAdmin () {
       }
       return response.json()
     }).then((data) => {
+      dispatch(setUser(data))
+      Cookies.set('user_id',data._id);
       Cookies.set('token', data.token)
       setError('success')
       navigate('/admin/home')
@@ -69,11 +73,6 @@ export default function LoginAdmin () {
   React.useEffect(() => {
     Cookies.get('token')
     const token = Cookies.get('token')
-    // if (!token)
-    // return
-    //  else {
-    //     navigate('/admin/home')
-    // }
     if (token) {
       navigate('/admin/home')
     }

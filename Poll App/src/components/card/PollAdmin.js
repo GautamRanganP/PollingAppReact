@@ -1,13 +1,38 @@
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import Cookies from 'js-cookie'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const PollAdmin = (props) => {
+  // const classes = useStyles()
   const { title, description, _id, votes, optiononevote, optiontwovote, startdate, enddate, optionone, optiontwo } = props.data
   const navigate = useNavigate()
   const handlerNavigation = () => {
     navigate(`/admin/edit/${_id}`)
   }
+
+  const [open, setOpen] = React.useState(false);
+  const [type, setType] = React.useState('');
+
+  const handleClickOpen = (buttonType) => {
+    setOpen(true);
+    setType(buttonType)
+  };
+
+  const handleClose = (choice) => {
+    setOpen(false);
+    if(choice==='yes'){
+      if(type==='delete')
+        handleDelete()
+      if(type==='reset')
+        handleReset()
+    }
+  };
+
 
   function handleDelete () {
     const token = Cookies.get('token')
@@ -48,6 +73,34 @@ const PollAdmin = (props) => {
   }
 
   return (
+    <div>
+        <div>
+      {/* <Button variant="outlined" onClick={handleClickOpen}>
+        Open alert dialog
+      </Button> */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Are you sure want to {type} ?
+        </DialogTitle>
+        {/* <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you Sure Want to Reset ?
+          </DialogContentText>
+        </DialogContent> */}
+        <DialogActions>
+          <Button  onClick={()=>{handleClose('yes')}}> Yes </Button>
+          <Button  onClick={()=>{handleClose('no')}} autoFocus>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+      
             <div className="card admin-card">
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
@@ -61,11 +114,12 @@ const PollAdmin = (props) => {
                     </div>
                     <div className="btn-poll-wrap">
                         <button className="btn btn-primary" style={{ flex: '1' }} type="button" onClick = {handlerNavigation}>Edit</button>
-                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={handleDelete}>Delete</button>
-                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={handleReset}>Reset Vote</button>
+                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={()=>{handleClickOpen('delete')}}>Delete</button>
+                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={()=>{handleClickOpen('reset')}}>Reset</button>
                     </div>
                 </div>
             </div>
+        </div>
   )
 }
 

@@ -41,15 +41,18 @@ const PollCard = (props) => {
   }, [optiontwovote, votes])
 
   useEffect(() => {
-    const today = moment().format('DD/MM/YYYY')
-    let startingdate = ''
-    if (moment(startdate).isAfter(today)) startingdate = startdate
-    else startingdate = today
-    const a = moment(enddate, 'DD/MM/YYYY')
-    const b = moment(startingdate, 'DD/MM/YYYY')
-    const daysAvailable = a.diff(b, 'days')
-    setDaysLeft(daysAvailable)
-    console.log('date left:', daysAvailable)
+    const today = moment().format('YYYY/MM/DD').toString()
+    const end = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString() 
+    if (moment(end).isSameOrAfter(today)) {
+      const a = moment(enddate, 'DD/MM/YYYY')
+      const b = moment(startdate, 'DD/MM/YYYY')
+      const daysAvailable = a.diff(b, 'days')
+      setDaysLeft(daysAvailable)
+      console.log('date left:', daysAvailable)
+    }
+    else {
+      setDaysLeft(-1);
+    }
   }, [startdate, enddate])
 
   const handlerOptionOne = (e) => {
@@ -73,36 +76,36 @@ const PollCard = (props) => {
         <p className="card-text">{description}</p>
         {!ispollalreadyselected && daysleft >= 1
           ? (
-          <div className="d-flex gap-4">
-            <button
-              className="btn btn-primary "
-              style={{ flex: '1', fontWeight: '700' }}
-              value={optionone}
-              type="button"
-              onClick={handlerOptionOne}
-            >
-              {optionone}
-            </button>
-            <button
-              className="btn btn-primary"
-              style={{ flex: '1', fontWeight: '700' }}
-              value={optiontwo}
-              type="button"
-              onClick={handlerOptionTwo}
-            >
-              {optiontwo}
-            </button>
-          </div>
-            )
+            <div className="d-flex gap-4">
+              <button
+                className="btn btn-primary "
+                style={{ flex: '1', fontWeight: '700' }}
+                value={optionone}
+                type="button"
+                onClick={handlerOptionOne}
+              >
+                {optionone}
+              </button>
+              <button
+                className="btn btn-primary"
+                style={{ flex: '1', fontWeight: '700' }}
+                value={optiontwo}
+                type="button"
+                onClick={handlerOptionTwo}
+              >
+                {optiontwo}
+              </button>
+            </div>
+          )
           : (
-          <div>
-            <ProgressBar data={percentone}></ProgressBar>
-            <ProgressBar data={percenttwo}></ProgressBar>
-          </div>
-            )}
+            <div>
+              <ProgressBar data={percentone}></ProgressBar>
+              <ProgressBar data={percenttwo}></ProgressBar>
+            </div>
+          )}
         <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
-        {ispollalreadyselected
-          ? <span
+          {ispollalreadyselected
+            ? <span
               style={{
                 backgroundColor: 'green',
                 borderRadius: '5px',
@@ -114,8 +117,8 @@ const PollCard = (props) => {
             >
               Already voted
             </span>
-          : <span></span>
-        }
+            : <span></span>
+          }
           <span
             style={{
               fontSize: '14px',
@@ -126,31 +129,31 @@ const PollCard = (props) => {
           >
             Total votes: <span>{votes}</span>
           </span>
-          { daysleft >= 1
+          {daysleft >= 1
             ? (
-            <span
-              style={{
-                fontSize: '14px',
-                color: 'gray',
-                margin: '10px',
-                marginBottom: '0px'
-              }}
-            >
-              Days left: <span>{daysleft}</span>
-            </span>
-              )
+              <span
+                style={{
+                  fontSize: '14px',
+                  color: 'gray',
+                  margin: '10px',
+                  marginBottom: '0px'
+                }}
+              >
+                Days left: <span>{daysleft}</span>
+              </span>
+            )
             : (
-            <span
-              style={{
-                fontSize: '14px',
-                color: 'gray',
-                margin: '10px',
-                marginBottom: '0px'
-              }}
-            >
-              Poll expired
-            </span>
-              )}
+              <span
+                style={{
+                  fontSize: '14px',
+                  color: 'gray',
+                  margin: '10px',
+                  marginBottom: '0px'
+                }}
+              >
+                Poll expired
+              </span>
+            )}
         </div>
       </div>
     </div>
