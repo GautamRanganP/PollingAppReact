@@ -10,6 +10,8 @@ import LoginAdmin from './components/admin/LoginAdmin'
 import { HomePage } from './pages/HomePage'
 import { AdminPage } from './pages/AdminPage'
 import Navbar from './components/navbar/Navbar'
+import AdminProfile from './components/admin/AdminProfile'
+import ErrorPage from './components/error/ErrorPage'
 
 function App () {
   return (
@@ -22,7 +24,14 @@ function App () {
           <Route path='/admin/home' element={<AdminPage></AdminPage>}></Route>
           <Route path='/admin/edit/:id' element={<AdminForm></AdminForm>}></Route>
           <Route path='/admin/create' element={<AdminCreate></AdminCreate>}></Route>
+          <Route path='/admin/profile' element={<AdminProfile></AdminProfile>}></Route>
+          <Route path='*' exact={true} element={<ErrorPage></ErrorPage>}></Route>
         </Routes>
+        <footer>
+          <div className='footer'>
+
+          </div>
+        </footer>
       </BrowserRouter>
      </div>
   )

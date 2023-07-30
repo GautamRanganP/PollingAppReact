@@ -37,7 +37,7 @@ export default function LoginAdmin () {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = React.useCallback((event) => {
     event.preventDefault()
     setError('loading')
     const data = new FormData(event.currentTarget)
@@ -48,7 +48,7 @@ export default function LoginAdmin () {
     const email = data.get('email')
     const password = data.get('password')
     const payload = { email, password }
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8082/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -61,14 +61,15 @@ export default function LoginAdmin () {
       return response.json()
     }).then((data) => {
       dispatch(setUser(data))
-      Cookies.set('user_id',data._id);
-      Cookies.set('token', data.token)
+      const expireTime = new Date(new Date().getTime() + 60 * 60 * 1000)
+      Cookies.set('user_id', data._id, { expires: expireTime })
+      Cookies.set('token', data.token, { expires: expireTime })
       setError('success')
       navigate('/admin/home')
     }).catch(() => {
       setError('failed')
     })
-  }
+  }, [])
 
   React.useEffect(() => {
     Cookies.get('token')

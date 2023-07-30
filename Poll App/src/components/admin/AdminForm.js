@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
@@ -17,7 +17,7 @@ const AdminForm = () => {
   const navigate = useNavigate()
 
   async function fetchData () {
-    const response = await fetch(`http://localhost:8080/getpoll/${id}`)
+    const response = await fetch(`http://localhost:8082/getpoll/${id}`)
     const responseData = await response.json()
     setStartDateForm(moment(responseData.startdate, 'DD/MM/YYYY').toDate())
     setEndDateForm(moment(responseData.enddate, 'DD/MM/YYYY').toDate())
@@ -49,7 +49,7 @@ const AdminForm = () => {
     const enddate = moment(enddateform).format('DD/MM/YYYY')
     const data = { title, description, startdate, enddate, optionone, optiontwo }
     const token = Cookies.get('token')
-    fetch(`http://localhost:8080/updatepoll/${id}`, {
+    fetch(`http://localhost:8082/updatepoll/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -96,9 +96,9 @@ const AdminForm = () => {
                         dateFormat="dd/MM/yyyy"
                         showTimeSelect={false}
                         selected={startdateform}
-                        onChange={(date) => {
+                        onChange={useCallback((date) => {
                           setStartDateForm(date)
-                        }
+                        }, [])
                         }
                         minDate={moment()._d}
 
@@ -111,9 +111,9 @@ const AdminForm = () => {
                          dateFormat="dd/MM/yyyy"
                          showTimeSelect={false}
                          selected={enddateform}
-                         onChange={(date) => {
+                         onChange={useCallback((date) => {
                            setEndDateForm(date)
-                         }
+                         }, [])
                          }
                          minDate={moment().add(1, 'days')._d}
 

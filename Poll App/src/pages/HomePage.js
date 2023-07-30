@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import PollCard from '../components/card/PollCard'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export function HomePage () {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  function handleOptionOne (id, count, total) {
+  const handleOptionOne = useCallback((id, count, total) => {
     const newSocket = new WebSocket('ws://localhost:8081/')
     let serverdata = {}
     newSocket.addEventListener('open', (event) => {
@@ -17,9 +20,9 @@ export function HomePage () {
       serverdata = JSON.parse(event.data)
       setData(serverdata)
     })
-  }
+  }, [])
 
-  function handleOptionTwo (id, count, total) {
+  const handleOptionTwo = useCallback((id, count, total) => {
     const newSocket = new WebSocket('ws://localhost:8081/')
     let serverdata = {}
     newSocket.addEventListener('open', (event) => {
@@ -32,7 +35,7 @@ export function HomePage () {
       serverdata = JSON.parse(event.data)
       setData(serverdata)
     })
-  }
+  }, [])
 
   useEffect(() => {
     const newSocket = new WebSocket('ws://localhost:8081/')
@@ -50,12 +53,13 @@ export function HomePage () {
     newSocket.addEventListener('close', (event) => {
       console.log('connection close')
     })
+    setLoading(false)
   }, [])
 
   return (
         <div className="content-poll">
             { data.length > 0
-              ? <div className="row poll-card-margin" style={{ margin: '10px' }}>
+              ? <div className="row poll-card-margin" style={{ margin: '20px' }}>
                     { data.map((poll) => {
                       return (
                           <div className="col-sm-6 mb-4" key={poll._id}>
@@ -65,7 +69,15 @@ export function HomePage () {
                     })
                     }
                 </div>
-              : <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>No poll Available</div>
+              : <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>
+                <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+No poll Available
+              </div>
             }
         </div>
   )

@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Cookies from 'js-cookie'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogTitle from '@mui/material/DialogTitle'
 
 const PollAdmin = (props) => {
   // const classes = useStyles()
@@ -15,28 +14,25 @@ const PollAdmin = (props) => {
     navigate(`/admin/edit/${_id}`)
   }
 
-  const [open, setOpen] = React.useState(false);
-  const [type, setType] = React.useState('');
+  const [open, setOpen] = React.useState(false)
+  const [type, setType] = React.useState('')
 
   const handleClickOpen = (buttonType) => {
-    setOpen(true);
+    setOpen(true)
     setType(buttonType)
-  };
+  }
 
-  const handleClose = (choice) => {
-    setOpen(false);
-    if(choice==='yes'){
-      if(type==='delete')
-        handleDelete()
-      if(type==='reset')
-        handleReset()
+  const handleClose = useCallback((choice) => {
+    setOpen(false)
+    if (choice === 'yes') {
+      if (type === 'delete') { handleDelete() }
+      if (type === 'reset') { handleReset() }
     }
-  };
-
+  }, [])
 
   function handleDelete () {
     const token = Cookies.get('token')
-    fetch(`http://localhost:8080/deletepoll/${_id}`, {
+    fetch(`http://localhost:8082/deletepoll/${_id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +51,7 @@ const PollAdmin = (props) => {
 
   function handleReset () {
     const token = Cookies.get('token')
-    fetch(`http://localhost:8080/reset/${_id}`, {
+    fetch(`http://localhost:8082/reset/${_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -93,14 +89,14 @@ const PollAdmin = (props) => {
           </DialogContentText>
         </DialogContent> */}
         <DialogActions>
-          <Button  onClick={()=>{handleClose('yes')}}> Yes </Button>
-          <Button  onClick={()=>{handleClose('no')}} autoFocus>
+          <Button onClick={useCallback(() => { handleClose('yes') }, [])}> Yes </Button>
+          <Button onClick={useCallback(() => { handleClose('no') }, [])} autoFocus>
             No
           </Button>
         </DialogActions>
       </Dialog>
     </div>
-      
+
             <div className="card admin-card">
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
@@ -114,8 +110,8 @@ const PollAdmin = (props) => {
                     </div>
                     <div className="btn-poll-wrap">
                         <button className="btn btn-primary" style={{ flex: '1' }} type="button" onClick = {handlerNavigation}>Edit</button>
-                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={()=>{handleClickOpen('delete')}}>Delete</button>
-                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={()=>{handleClickOpen('reset')}}>Reset</button>
+                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={() => { handleClickOpen('delete') }}>Delete</button>
+                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={() => { handleClickOpen('reset') }}>Reset</button>
                     </div>
                 </div>
             </div>

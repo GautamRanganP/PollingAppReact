@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+// import { TextareaAutosize, TextField } from '@mui/material'
 
 const AdminCreate = () => {
   const [title, setTitle] = useState('')
@@ -40,7 +41,7 @@ const AdminCreate = () => {
     const optiontwovote = 0
     const data = { title, description, startdate, enddate, votes, optionone, optiontwo, optiononevote, optiontwovote }
     const token = Cookies.get('token')
-    fetch('http://localhost:8080/createpoll', {
+    fetch('http://localhost:8082/createpoll', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,13 +61,13 @@ const AdminCreate = () => {
     })
   }
 
-  function settingStartDate (date) {
+  const settingStartDate = useCallback((date) => {
     setStartDateForm(date)
-  }
+  }, [])
 
-  function settingEndDate (date) {
+  const settingEndDate = useCallback((date) => {
     setEndDateForm(date)
-  }
+  }, [])
 
   return (
         <div className="wrap">
@@ -88,6 +89,10 @@ const AdminCreate = () => {
                     <label htmlFor="optiontwo">option 2</label>
                     <input type="text" className="form-control" id="optiontwo" placeholder="optiontwo" value={optiontwo} onChange={(e) => setOptionTwo(e.target.value)}/>
                 </div>
+                {/* <TextField sx={{marginBottom: '20px' }} required fullWidth name="title" label="Title" type="text" id="title" />
+                <TextareaAutosize required name="description" label="Description" type="text" id="description"></TextareaAutosize>
+                <TextField sx={{marginBottom: '20px' }} required fullWidth name="optionone" label="optionone" type="text" id="optionone" />
+                <TextField sx={{marginBottom: '20px' }} required fullWidth name="optiontwo" label="optiontwo" type="text" id="optiontwo" /> */}
                 <div className="form-group">
                     <label htmlFor="startdate" className="form-label">Start Date</label>
                     <DatePicker

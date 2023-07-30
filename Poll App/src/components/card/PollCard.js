@@ -42,16 +42,25 @@ const PollCard = (props) => {
 
   useEffect(() => {
     const today = moment().format('YYYY/MM/DD').toString()
-    const end = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString() 
+    const todayFormat = moment().format('DD/MM/YYYY').toString()
+    const end = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString()
+    const start = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString()
     if (moment(end).isSameOrAfter(today)) {
+      let startingdate = ''
+      if (moment(start).isAfter(today)) startingdate = startdate
+      else startingdate = todayFormat
       const a = moment(enddate, 'DD/MM/YYYY')
-      const b = moment(startdate, 'DD/MM/YYYY')
+      const b = moment(startingdate, 'DD/MM/YYYY')
       const daysAvailable = a.diff(b, 'days')
-      setDaysLeft(daysAvailable)
+      // handling 0 days
+      if (daysAvailable === 0) {
+        setDaysLeft(1)
+      } else {
+        setDaysLeft(daysAvailable)
+      }
       console.log('date left:', daysAvailable)
-    }
-    else {
-      setDaysLeft(-1);
+    } else {
+      setDaysLeft(-1)
     }
   }, [startdate, enddate])
 
@@ -96,13 +105,13 @@ const PollCard = (props) => {
                 {optiontwo}
               </button>
             </div>
-          )
+            )
           : (
             <div>
               <ProgressBar data={percentone}></ProgressBar>
               <ProgressBar data={percenttwo}></ProgressBar>
             </div>
-          )}
+            )}
         <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
           {ispollalreadyselected
             ? <span
@@ -110,9 +119,9 @@ const PollCard = (props) => {
                 backgroundColor: 'green',
                 borderRadius: '5px',
                 color: 'white',
-                fontWeight: '700',
+                fontWeight: '600',
                 marginBottom: '0px',
-                padding: '5px'
+                padding: '5px 10px'
               }}
             >
               Already voted
@@ -141,7 +150,7 @@ const PollCard = (props) => {
               >
                 Days left: <span>{daysleft}</span>
               </span>
-            )
+              )
             : (
               <span
                 style={{
@@ -153,7 +162,7 @@ const PollCard = (props) => {
               >
                 Poll expired
               </span>
-            )}
+              )}
         </div>
       </div>
     </div>
