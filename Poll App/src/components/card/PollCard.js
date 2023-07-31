@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import ProgressBar from '../progess/ProgressBar'
 
 const PollCard = (props) => {
@@ -7,6 +8,7 @@ const PollCard = (props) => {
   const [percenttwo, setPercentTwo] = useState(0)
   const [ispollalreadyselected, setIsPollAlreadySelected] = useState(false)
   const [daysleft, setDaysLeft] = useState('')
+  const user = useSelector((state) => state.user.user)
   const {
     _id,
     title,
@@ -123,7 +125,7 @@ const PollCard = (props) => {
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>
-        {!ispollalreadyselected && daysleft >= 1
+        {!ispollalreadyselected && daysleft >= 1 && !user
           ? (
             <div className="d-flex gap-4">
               <button
@@ -153,7 +155,7 @@ const PollCard = (props) => {
             </div>
           )}
         <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
-          {ispollalreadyselected
+          {ispollalreadyselected && !user
             ? <span
               style={{
                 backgroundColor: 'green',
