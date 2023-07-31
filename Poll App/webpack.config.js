@@ -20,7 +20,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html'
+      template: './public/index.html',
+      favicon: "./public/favicon.ico",
+      filename: "index.html",
+      manifest: "./public/manifest.json",
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
@@ -39,6 +42,11 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+        exclude: /node_modules/,
+        use: ['file-loader?name=[name].[ext]'] // ?name=[name].[ext] is only necessary to preserve the original file name
       },
       {
         test: /\.(scss|css)$/,

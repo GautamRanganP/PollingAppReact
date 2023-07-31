@@ -41,14 +41,15 @@ const PollCard = (props) => {
   }, [optiontwovote, votes])
 
   useEffect(() => {
+    checkVoted();
     const today = moment().format('YYYY/MM/DD').toString()
     const todayFormat = moment().format('DD/MM/YYYY').toString()
     const end = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString()
     const start = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString()
     if (moment(end).isSameOrAfter(today)) {
       let startingdate = ''
-      if (moment(start).isAfter(today)) startingdate = startdate
-      else startingdate = todayFormat
+      if (moment(start).isAfter(today)) startingdate = todayFormat
+      else startingdate = startdate
       const a = moment(enddate, 'DD/MM/YYYY')
       const b = moment(startingdate, 'DD/MM/YYYY')
       const daysAvailable = a.diff(b, 'days')
@@ -64,11 +65,49 @@ const PollCard = (props) => {
     }
   }, [startdate, enddate])
 
+  function setVoteId(id) {
+    if (localStorage.getItem('poll_id')) {
+      const storedIDsJSON = localStorage.getItem('poll_id');
+      let storedIDsArray = [];
+      if (storedIDsJSON) {
+        storedIDsArray = JSON.parse(storedIDsJSON);
+      }
+      storedIDsArray.push(id);
+      const updatedIDsJSON = JSON.stringify(storedIDsArray);
+      localStorage.setItem('poll_id', updatedIDsJSON)
+    }
+    else {
+      const initialArray = [];
+      initialArray.push(id);
+      const updatedIDsJSON = JSON.stringify(initialArray);
+      localStorage.setItem('poll_id', updatedIDsJSON)
+    }
+  }
+  function checkVoted() {
+    if (localStorage.getItem('poll_id')) {
+      const storedIDsJSON = localStorage.getItem('poll_id');
+      let storedIDsArray = [];
+      if (storedIDsJSON) {
+        storedIDsArray = JSON.parse(storedIDsJSON);
+      }
+      const isIDPresent = storedIDsArray.includes(_id);
+      if(isIDPresent){
+        setIsPollAlreadySelected(true)
+      }
+      else{
+        setIsPollAlreadySelected(false)
+      }
+
+
+    }
+  }
+
   const handlerOptionOne = (e) => {
     let count = optiononevote
     count++
     props.onEvent1(_id, count, votes)
     setIsPollAlreadySelected(true)
+    setVoteId(_id)
   }
 
   const handlerOptionTwo = () => {
@@ -76,6 +115,7 @@ const PollCard = (props) => {
     count++
     props.onEvent2(_id, count, votes)
     setIsPollAlreadySelected(true)
+    setVoteId(_id)
   }
 
   return (
@@ -105,13 +145,13 @@ const PollCard = (props) => {
                 {optiontwo}
               </button>
             </div>
-            )
+          )
           : (
             <div>
               <ProgressBar data={percentone}></ProgressBar>
               <ProgressBar data={percenttwo}></ProgressBar>
             </div>
-            )}
+          )}
         <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
           {ispollalreadyselected
             ? <span
@@ -150,7 +190,7 @@ const PollCard = (props) => {
               >
                 Days left: <span>{daysleft}</span>
               </span>
-              )
+            )
             : (
               <span
                 style={{
@@ -162,7 +202,7 @@ const PollCard = (props) => {
               >
                 Poll expired
               </span>
-              )}
+            )}
         </div>
       </div>
     </div>

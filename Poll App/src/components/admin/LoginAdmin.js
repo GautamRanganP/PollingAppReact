@@ -148,7 +148,7 @@ export default function LoginAdmin () {
             { error === 'success' && <Alert severity='success'>Authentication Sucess</Alert> }
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   )

@@ -24,6 +24,7 @@ const Navbar = () => {
   }, [])
   const handleLogoutClick = useCallback(() => {
     handleClose()
+    localStorage.removeItem('token');
     Cookies.remove('token')
     Cookies.remove('user_id')
     dispatch(removeUser())
@@ -31,7 +32,28 @@ const Navbar = () => {
     if (!token) {
       navigate('/')
     }
+  // removeToken()
+  // .then((message) => {
+  //   console.log(message);
+  //     navigate('/')
+  // })
+  // .catch((error) => {
+  //   console.error(error); 
+  // });
   }, [])
+  // function removeToken() {
+  //   return new Promise((resolve, reject) => {
+  //     try {
+  //       localStorage.removeItem('token');
+  //       Cookies.remove('token')
+  //       Cookies.remove('user_id')
+  //       dispatch(removeUser())
+  //       resolve('Token removed successfully');
+  //     } catch (error) {
+  //       reject(error);
+  //     }
+  //   });
+  // }
 
   const handleProfileRoute = useCallback(() => {
     handleClose()
@@ -100,8 +122,8 @@ const Navbar = () => {
                                   'aria-labelledby': 'basic-button'
                                 }}
                             >
-                                <MenuItem onClick={handleHomeRoute} selected={location.pathname === '/admin/home' }>A Home</MenuItem>
-                                <MenuItem onClick={handlePollHome} selected={location.pathname === '/' }>P Home</MenuItem>
+                                <MenuItem onClick={handleHomeRoute} selected={location.pathname === '/admin/home' }>Admin Home</MenuItem>
+                                <MenuItem onClick={handlePollHome} selected={location.pathname === '/' }>Participant Home</MenuItem>
                                 <MenuItem onClick={handleProfileRoute} selected={location.pathname === '/admin/profile' }>Profile</MenuItem>
                                 <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
                                 {/* <MenuItem onClick={handleRoute('admin')} selected={location.pathname === '/admin/home' }>A Home</MenuItem>

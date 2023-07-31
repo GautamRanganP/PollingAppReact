@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import React, { useCallback } from 'react'
+import React from 'react'
 import Cookies from 'js-cookie'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -7,29 +7,33 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 
 const PollAdmin = (props) => {
-  // const classes = useStyles()
   const { title, description, _id, votes, optiononevote, optiontwovote, startdate, enddate, optionone, optiontwo } = props.data
   const navigate = useNavigate()
   const handlerNavigation = () => {
     navigate(`/admin/edit/${_id}`)
   }
-
+  const handleDeleteOption = () => {
+    setOpen(true)
+    setType('delete')
+  }
+  const handleResetOption = () => {
+    setOpen(true)
+    setType('reset')
+  }
   const [open, setOpen] = React.useState(false)
   const [type, setType] = React.useState('')
 
-  const handleClickOpen = (buttonType) => {
-    setOpen(true)
-    setType(buttonType)
-  }
-
-  const handleClose = useCallback((choice) => {
+  const handleClose = ()=>{
     setOpen(false)
-    if (choice === 'yes') {
-      if (type === 'delete') { handleDelete() }
-      if (type === 'reset') { handleReset() }
-    }
-  }, [])
-
+  }
+  const handleYesClose = () =>{
+    setOpen(false)
+    if (type === 'delete') { handleDelete() }
+    if (type === 'reset') { handleReset() }
+  } 
+  const handleNoClose = () =>{
+    setOpen(false)
+  }
   function handleDelete () {
     const token = Cookies.get('token')
     fetch(`http://localhost:8082/deletepoll/${_id}`, {
@@ -89,8 +93,8 @@ const PollAdmin = (props) => {
           </DialogContentText>
         </DialogContent> */}
         <DialogActions>
-          <Button onClick={useCallback(() => { handleClose('yes') }, [])}> Yes </Button>
-          <Button onClick={useCallback(() => { handleClose('no') }, [])} autoFocus>
+          <Button onClick={handleYesClose}> Yes </Button>
+          <Button onClick={handleNoClose} autoFocus>
             No
           </Button>
         </DialogActions>
@@ -110,8 +114,8 @@ const PollAdmin = (props) => {
                     </div>
                     <div className="btn-poll-wrap">
                         <button className="btn btn-primary" style={{ flex: '1' }} type="button" onClick = {handlerNavigation}>Edit</button>
-                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={() => { handleClickOpen('delete') }}>Delete</button>
-                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={() => { handleClickOpen('reset') }}>Reset</button>
+                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={handleDeleteOption}>Delete</button>
+                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={handleResetOption}>Reset</button>
                     </div>
                 </div>
             </div>

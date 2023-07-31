@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 export function AdminPage () {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   const handleRoute = () => {
@@ -28,6 +29,7 @@ export function AdminPage () {
     newSocket.addEventListener('message', (event) => {
       console.log('Message from server ', event.data)
       const response = JSON.parse(event.data)
+      setLoading(false)
       setData(response)
     })
     newSocket.addEventListener('close', (event) => {
@@ -44,8 +46,8 @@ export function AdminPage () {
                 <div className="d-flex justify-content-center mb-4">
                     <button className="btn btn-primary" onClick={handleRoute}>Create Poll</button>
                 </div>
-                {data.length > 0
-                  ? <div className="row poll-card-margin">
+                {data.length > 0  && !loading
+                  && <div className="row poll-card-margin">
                         {data.map((poll) => {
                           return (
                                 <div className="col-sm-6 mb-5" key={poll._id}>
@@ -55,8 +57,14 @@ export function AdminPage () {
                         })}
 
                     </div>
-                  : <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>No poll Available</div>
+                 }
+                 { !data.length > 0 && !loading && <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>No poll Available</div>
                 }
+                  { loading && <div className="d-flex justify-content-center mt-4">
+                          <div className="spinner-border" role="status">
+                          </div>
+                        </div>
+            }
             </div>
         </div>
   )

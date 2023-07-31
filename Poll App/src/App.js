@@ -12,12 +12,14 @@ import { AdminPage } from './pages/AdminPage'
 import Navbar from './components/navbar/Navbar'
 import AdminProfile from './components/admin/AdminProfile'
 import ErrorPage from './components/error/ErrorPage'
+import { Link, Typography } from '@mui/material'
 
-function App () {
+function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar></Navbar>
+        <div className='main-content'>
         <Routes>
           <Route path='/' element={<HomePage></HomePage>} />
           <Route path='/admin' element={<LoginAdmin></LoginAdmin>}></Route>
@@ -27,13 +29,22 @@ function App () {
           <Route path='/admin/profile' element={<AdminProfile></AdminProfile>}></Route>
           <Route path='*' exact={true} element={<ErrorPage></ErrorPage>}></Route>
         </Routes>
+        </div>
         <footer>
-          <div className='footer'>
+          <div className='footer' style={{height:'100%',display:'flex',alignItems:"flex-end",justifyContent:"center"}}>
+            <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 8, mb: 4 }}>
+              {'Copyright © '}
+              <Link color="inherit" href="https://mui.com/">
+                Company
+              </Link>{' '}
+              {new Date().getFullYear()}
+              {'.'}
+            </Typography>
 
           </div>
         </footer>
       </BrowserRouter>
-     </div>
+    </div>
   )
 }
 
