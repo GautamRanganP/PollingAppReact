@@ -29,6 +29,7 @@ export function AdminPage () {
     newSocket.addEventListener('message', (event) => {
       console.log('Message from server ', event.data)
       const response = JSON.parse(event.data)
+      console.log('response ', response)
       setLoading(false)
       setData(response)
     })
@@ -46,8 +47,8 @@ export function AdminPage () {
                 <div className="d-flex justify-content-center mb-4">
                     <button className="btn btn-primary" onClick={handleRoute}>Create Poll</button>
                 </div>
-                {data.length > 0  && !loading
-                  && <div className="row poll-card-margin">
+                {data.length > 0 && !loading &&
+                  <div className="row poll-card-margin">
                         {data.map((poll) => {
                           return (
                                 <div className="col-sm-6 mb-5" key={poll._id}>

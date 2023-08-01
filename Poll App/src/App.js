@@ -14,7 +14,7 @@ import AdminProfile from './components/admin/AdminProfile'
 import ErrorPage from './components/error/ErrorPage'
 import { Link, Typography } from '@mui/material'
 
-function App() {
+function App () {
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,7 +31,7 @@ function App() {
         </Routes>
         </div>
         <footer>
-          <div className='footer' style={{height:'100%',display:'flex',alignItems:"flex-end",justifyContent:"center"}}>
+          <div className='footer' style={{ height: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
             <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 8, mb: 4 }}>
               {'Copyright © '}
               <Link color="inherit" href="https://mui.com/">

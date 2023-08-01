@@ -8,7 +8,7 @@ const PollCard = (props) => {
   const [percenttwo, setPercentTwo] = useState(0)
   const [ispollalreadyselected, setIsPollAlreadySelected] = useState(false)
   const [daysleft, setDaysLeft] = useState('')
-  const user = useSelector((state) => state.user.user)
+  const user = useSelector((state) => { if (state.user && state.user.user) return state.user.user })
   const {
     _id,
     title,
@@ -43,7 +43,7 @@ const PollCard = (props) => {
   }, [optiontwovote, votes])
 
   useEffect(() => {
-    checkVoted();
+    checkVoted()
     const today = moment().format('YYYY/MM/DD').toString()
     const todayFormat = moment().format('DD/MM/YYYY').toString()
     const end = moment(enddate, 'DD/MM/YYYY').format('YYYY/MM/DD').toString()
@@ -67,40 +67,36 @@ const PollCard = (props) => {
     }
   }, [startdate, enddate])
 
-  function setVoteId(id) {
+  function setVoteId (id) {
     if (localStorage.getItem('poll_id')) {
-      const storedIDsJSON = localStorage.getItem('poll_id');
-      let storedIDsArray = [];
+      const storedIDsJSON = localStorage.getItem('poll_id')
+      let storedIDsArray = []
       if (storedIDsJSON) {
-        storedIDsArray = JSON.parse(storedIDsJSON);
+        storedIDsArray = JSON.parse(storedIDsJSON)
       }
-      storedIDsArray.push(id);
-      const updatedIDsJSON = JSON.stringify(storedIDsArray);
+      storedIDsArray.push(id)
+      const updatedIDsJSON = JSON.stringify(storedIDsArray)
       localStorage.setItem('poll_id', updatedIDsJSON)
-    }
-    else {
-      const initialArray = [];
-      initialArray.push(id);
-      const updatedIDsJSON = JSON.stringify(initialArray);
+    } else {
+      const initialArray = []
+      initialArray.push(id)
+      const updatedIDsJSON = JSON.stringify(initialArray)
       localStorage.setItem('poll_id', updatedIDsJSON)
     }
   }
-  function checkVoted() {
+  function checkVoted () {
     if (localStorage.getItem('poll_id')) {
-      const storedIDsJSON = localStorage.getItem('poll_id');
-      let storedIDsArray = [];
+      const storedIDsJSON = localStorage.getItem('poll_id')
+      let storedIDsArray = []
       if (storedIDsJSON) {
-        storedIDsArray = JSON.parse(storedIDsJSON);
+        storedIDsArray = JSON.parse(storedIDsJSON)
       }
-      const isIDPresent = storedIDsArray.includes(_id);
-      if(isIDPresent){
+      const isIDPresent = storedIDsArray.includes(_id)
+      if (isIDPresent) {
         setIsPollAlreadySelected(true)
-      }
-      else{
+      } else {
         setIsPollAlreadySelected(false)
       }
-
-
     }
   }
 
@@ -147,13 +143,13 @@ const PollCard = (props) => {
                 {optiontwo}
               </button>
             </div>
-          )
+            )
           : (
             <div>
               <ProgressBar data={percentone}></ProgressBar>
               <ProgressBar data={percenttwo}></ProgressBar>
             </div>
-          )}
+            )}
         <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
           {ispollalreadyselected && !user
             ? <span
@@ -192,7 +188,7 @@ const PollCard = (props) => {
               >
                 Days left: <span>{daysleft}</span>
               </span>
-            )
+              )
             : (
               <span
                 style={{
@@ -204,7 +200,7 @@ const PollCard = (props) => {
               >
                 Poll expired
               </span>
-            )}
+              )}
         </div>
       </div>
     </div>

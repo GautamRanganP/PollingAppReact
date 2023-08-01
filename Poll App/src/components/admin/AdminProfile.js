@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const AdminProfile = () => {
   const user = useSelector((state) => state.user.user)
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     const token = Cookies.get('token')
     if (!token) {

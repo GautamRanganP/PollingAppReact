@@ -23,15 +23,15 @@ const PollAdmin = (props) => {
   const [open, setOpen] = React.useState(false)
   const [type, setType] = React.useState('')
 
-  const handleClose = ()=>{
+  const handleClose = () => {
     setOpen(false)
   }
-  const handleYesClose = () =>{
+  const handleYesClose = () => {
     setOpen(false)
     if (type === 'delete') { handleDelete() }
     if (type === 'reset') { handleReset() }
-  } 
-  const handleNoClose = () =>{
+  }
+  const handleNoClose = () => {
     setOpen(false)
   }
   function handleDelete () {

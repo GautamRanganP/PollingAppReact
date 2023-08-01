@@ -10,7 +10,7 @@ import Cookies from 'js-cookie'
 import { removeUser } from '../feature/UserSlice'
 
 const Navbar = () => {
-  const user = useSelector((state) => state.user.user)
+  const user = useSelector((state) => { if (state.user && state.user.user) return state.user.user })
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ const Navbar = () => {
   }, [])
   const handleLogoutClick = useCallback(() => {
     handleClose()
-    localStorage.removeItem('token');
+    localStorage.removeItem('token')
     Cookies.remove('token')
     Cookies.remove('user_id')
     dispatch(removeUser())
@@ -38,7 +38,7 @@ const Navbar = () => {
   //     navigate('/')
   // })
   // .catch((error) => {
-  //   console.error(error); 
+  //   console.error(error);
   // });
   }, [])
   // function removeToken() {
