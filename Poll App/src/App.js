@@ -31,7 +31,7 @@ function App () {
         </Routes>
         </div>
         <footer>
-          <div className='footer' style={{ height: '100%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+          <div className='footer'>
             <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 8, mb: 4 }}>
               {'Copyright © '}
               <Link color="inherit" href="https://mui.com/">

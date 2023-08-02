@@ -59,7 +59,7 @@ export function HomePage () {
   return (
         <div className="content-poll">
             { data.length > 0 && !loading &&
-              <div className="row poll-card-margin" style={{ margin: '20px' }}>
+              <div className="row poll-card-margin">
                     { data.map((poll) => {
                       return (
                           <div className="col-sm-6 mb-4" key={poll._id}>
@@ -69,13 +69,7 @@ export function HomePage () {
                     })
                     }
                 </div>}
-          { !data.length > 0 && !loading && <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>
-                {/* <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={!data.length > 0}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop> */}
+          { !data.length > 0 && !loading && <div className='poll-empty'>
                No poll Available
               </div>
 }

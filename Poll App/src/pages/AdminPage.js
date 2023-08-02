@@ -40,9 +40,6 @@ export function AdminPage () {
 
   return (
         <div>
-            {/* <div style={{ position: 'absolute', right: '10px', top: '8px' }}>
-                <button className="btn btn-primary" style={{backgroundColor:"transparent",color:"black"}} onClick={handlerLogout}> Logout</button>
-            </div> */}
             <div className="content-poll">
                 <div className="d-flex justify-content-center mb-4">
                     <button className="btn btn-primary" onClick={handleRoute}>Create Poll</button>
@@ -59,7 +56,7 @@ export function AdminPage () {
 
                     </div>
                  }
-                 { !data.length > 0 && !loading && <div style={{ fontSize: '24px', fontWeight: '700', textAlign: 'center', marginTop: '40px' }}>No poll Available</div>
+                 { !data.length > 0 && !loading && <div className="poll-empty">No poll Available</div>
                 }
                   { loading && <div className="d-flex justify-content-center mt-4">
                           <div className="spinner-border" role="status">

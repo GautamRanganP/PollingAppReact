@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import Cookies from 'js-cookie'
+import HowToVoteIcon from '@mui/icons-material/HowToVote'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import PollIcon from '@mui/icons-material/Poll'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -8,6 +11,8 @@ import DialogTitle from '@mui/material/DialogTitle'
 import './card.scss'
 
 const PollAdmin = (props) => {
+  const [open, setOpen] = React.useState(false)
+  const [type, setType] = React.useState('')
   const { title, description, _id, votes, optiononevote, optiontwovote, startdate, enddate, optionone, optiontwo } = props.data
   const navigate = useNavigate()
   const handlerNavigation = () => {
@@ -21,8 +26,6 @@ const PollAdmin = (props) => {
     setOpen(true)
     setType('reset')
   }
-  const [open, setOpen] = React.useState(false)
-  const [type, setType] = React.useState('')
 
   const handleClose = () => {
     setOpen(false)
@@ -94,11 +97,11 @@ const PollAdmin = (props) => {
             <h5 className="card-title">{title}</h5>
             <p className="card-text">{description}</p>
             <div className="votes-wrap-admin">
-              <span>{optionone} : <span>{optiononevote}</span></span>
-              <span>{optiontwo} : <span>{optiontwovote}</span></span>
-              <span>Total Votes: <span>{votes}</span></span>
-              <span>Start Date: <span>{startdate}</span></span>
-              <span>End Date: <span>{enddate}</span></span>
+              <span><HowToVoteIcon className='icon-admin-page'/><span>{optionone} : {optiononevote}</span></span>
+              <span><HowToVoteIcon className='icon-admin-page'/><span>{optiontwo} : {optiontwovote}</span></span>
+              <span><PollIcon className='icon-admin-page'/><span>Total Votes : {votes}</span></span>
+              <span><CalendarTodayIcon className='icon-admin-page'/><span>Start Date : {startdate}</span></span>
+              <span><CalendarTodayIcon className='icon-admin-page'/><span>End Date : {enddate}</span></span>
             </div>
             <div className="btn-admin-wrap">
               <button className="btn btn-primary" type="button" onClick = {handlerNavigation}>Edit</button>

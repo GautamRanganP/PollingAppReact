@@ -1,5 +1,4 @@
 .row.poll-card-margin{
-    /* margin: 40px 60px; */
     margin: 20px
 }
 label.form-label {
@@ -37,11 +36,6 @@ button.btn.btn-primary:hover,button.btn.btn-success:hover,button.btn.btn-danger:
   opacity: 1;
 }
 
-@media only screen and (max-width: 767px) {
-  /* .row.poll-card-margin {
-    margin: 20px;
-  } */
-}
 .content-poll{
   margin: 0px 0px;
 }
@@ -105,3 +99,19 @@ button.btn.btn-primary:hover,button.btn.btn-success:hover,button.btn.btn-danger:
    }
 }
 /* admin form */
+
+/* page */
+.poll-empty{
+  font-size: 24px;
+  font-weight: 700; 
+  text-align: center;
+  margin-top: 40px;
+}
+
+
+.footer{
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}

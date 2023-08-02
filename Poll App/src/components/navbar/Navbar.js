@@ -1,11 +1,15 @@
 import React, { useCallback, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import PollIcon from '@mui/icons-material/Poll'
+import GitHubIcon from '@mui/icons-material/GitHub'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import Avatar from '@mui/material/Avatar'
 import MenuItem from '@mui/material/MenuItem'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LogoutIcon from '@mui/icons-material/Logout'
+import GroupIcon from '@mui/icons-material/Group'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import Cookies from 'js-cookie'
 import { removeUser } from '../feature/UserSlice'
 
@@ -30,30 +34,9 @@ const Navbar = () => {
     dispatch(removeUser())
     const token = Cookies.get('token')
     if (!token) {
-      navigate('/')
+      navigate('/admin')
     }
-  // removeToken()
-  // .then((message) => {
-  //   console.log(message);
-  //     navigate('/')
-  // })
-  // .catch((error) => {
-  //   console.error(error);
-  // });
   }, [])
-  // function removeToken() {
-  //   return new Promise((resolve, reject) => {
-  //     try {
-  //       localStorage.removeItem('token');
-  //       Cookies.remove('token')
-  //       Cookies.remove('user_id')
-  //       dispatch(removeUser())
-  //       resolve('Token removed successfully');
-  //     } catch (error) {
-  //       reject(error);
-  //     }
-  //   });
-  // }
 
   const handleProfileRoute = useCallback(() => {
     handleClose()
@@ -68,37 +51,11 @@ const Navbar = () => {
     navigate('/')
   }, [])
 
-  // const handleRoute = useCallback((type) => {
-  //   handleClose()
-  //   switch (type) {
-  //     case 'admin':
-  //       navigate('/admin/home')
-  //       break
-  //     case 'participant':
-  //       navigate('/')
-  //       break
-  //     case 'profile':
-  //       navigate('/admin/profile')
-  //       break
-  //     case 'logout':{
-  //       Cookies.remove('token')
-  //       Cookies.remove('user_id')
-  //       dispatch(removeUser())
-  //       const token = Cookies.get('token')
-  //       if (!token) {
-  //         navigate('/')
-  //       }
-  //     }
-  //       break
-  //     default:
-  //   }
-  // }, [])
-
   return (
         <nav className="navbar" style={{ backgroundColor: '#e3f2fd', marginBottom: '10px' }}>
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/">
-                    <PollIcon sx={{ marginRight: '10px', fontSize: '34px' }}></PollIcon>
+                    <GitHubIcon sx={{ marginRight: '10px', fontSize: '34px' }}/>
                     Poll App
                 </NavLink>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -122,14 +79,10 @@ const Navbar = () => {
                                   'aria-labelledby': 'basic-button'
                                 }}
                             >
-                                <MenuItem onClick={handleHomeRoute} selected={location.pathname === '/admin/home' }>Admin Home</MenuItem>
-                                <MenuItem onClick={handlePollHome} selected={location.pathname === '/' }>Participant Home</MenuItem>
-                                <MenuItem onClick={handleProfileRoute} selected={location.pathname === '/admin/profile' }>Profile</MenuItem>
-                                <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-                                {/* <MenuItem onClick={handleRoute('admin')} selected={location.pathname === '/admin/home' }>A Home</MenuItem>
-                                <MenuItem onClick={handleRoute('participant')} selected={location.pathname === '/' }>P Home</MenuItem>
-                                <MenuItem onClick={handleRoute('profile')} selected={location.pathname === '/admin/profile' }>Profile</MenuItem>
-                                <MenuItem onClick={handleRoute('logout')}>Logout</MenuItem> */}
+                                <MenuItem onClick={handleHomeRoute} selected={location.pathname === '/admin/home' }><AdminPanelSettingsIcon sx={{ marginRight: '5px' }}/> Admin Home</MenuItem>
+                                <MenuItem onClick={handlePollHome} selected={location.pathname === '/' }><GroupIcon sx={{ marginRight: '5px' }}/> Participant Home</MenuItem>
+                                <MenuItem onClick={handleProfileRoute} selected={location.pathname === '/admin/profile' }><AccountCircleIcon sx={{ marginRight: '5px' }}/> Profile</MenuItem>
+                                <MenuItem onClick={handleLogoutClick}><LogoutIcon sx={{ marginRight: '5px' }}/> Logout</MenuItem>
                             </Menu>
                         </div>}
                 </div>

@@ -4,13 +4,22 @@
     .card-body{
         .votes-wrap-admin{
             display: grid;
+            overflow-x: auto;
+            white-space: nowrap;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: auto;
             gap: 5px 20px;
             margin-bottom: 10px; 
             span{
+                font-weight: 600;
                 font-size: 14px; 
                 color: gray;
+                display: flex;
+                align-items: center;
+                .icon-admin-page{
+                    font-size: 20px;
+                    margin-right: 5px;
+                }
             }  
         }
         .btn-admin-wrap{
@@ -23,18 +32,25 @@
         .votes-wrap{
             flex-wrap: wrap;
             .already-voted-text{
-                background-color: green;
-                border-radius: 5px;
-                color: white;
-                font-weight: 600;
-                margin-bottom: 0px;
-                padding: 5px 10px;
+                color: green;
             }
-            .total-votes-text,.poll-expired-text,.days-left-text{
+            .poll-expired-text{
+                color: red;
+            }
+            .already-voted-text,.poll-expired-text,.total-votes-text,.days-left-text{
+                display: flex;
+                align-items: center;
+                font-weight: 600;
                 font-size: 14px;
-                color: gray;
                 margin: 10px;
                 margin-bottom: 0px;
+            }
+            .total-votes-text,.days-left-text{
+                color: gray;
+            }
+            .icon-poll,.icon-expired,.icon-tick,.icon-days{
+                font-size: 20px;
+                margin-right: 5px ;
             }
         }
         .options-button-wrap{

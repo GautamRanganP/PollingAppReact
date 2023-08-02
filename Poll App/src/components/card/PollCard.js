@@ -2,14 +2,22 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProgressBar from '../progess/ProgressBar'
+import PollIcon from '@mui/icons-material/Poll'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import TimerIcon from '@mui/icons-material/Timer'
+import Popover from '@mui/material/Popover'
 import './card.scss'
+import { Typography } from '@mui/material'
 
 const PollCard = (props) => {
   const [percentone, setPercentOne] = useState(0)
   const [percenttwo, setPercentTwo] = useState(0)
   const [ispollalreadyselected, setIsPollAlreadySelected] = useState(false)
   const [daysleft, setDaysLeft] = useState('')
-  const user = useSelector((state) => { if (state.user && state.user.user) return state.user.user })
+  const user = useSelector((state) => {
+    if (state.user && state.user.user) return state.user.user
+  })
   const {
     _id,
     title,
@@ -22,6 +30,24 @@ const PollCard = (props) => {
     startdate,
     enddate
   } = props.data
+
+  const [anchorEl1, setAnchorEl1] = React.useState(null)
+  const handlePopoverOpen1 = (event) => {
+    setAnchorEl1(event.currentTarget)
+  }
+  const handlePopoverClose1 = () => {
+    setAnchorEl1(null)
+  }
+  const open1 = Boolean(anchorEl1)
+
+  const [anchorEl2, setAnchorEl2] = React.useState(null)
+  const handlePopoverOpen2 = (event) => {
+    setAnchorEl2(event.currentTarget)
+  }
+  const handlePopoverClose2 = () => {
+    setAnchorEl2(null)
+  }
+  const open2 = Boolean(anchorEl2)
 
   useEffect(() => {
     if (votes !== 0) {
@@ -122,32 +148,114 @@ const PollCard = (props) => {
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>
-        {!ispollalreadyselected && daysleft >= 1 && !user
-          ? (
-            <div className="d-flex gap-4 options-button-wrap">
-              <button className="btn btn-primary " value={optionone} type="button" onClick={handlerOptionOne}>
-                {optionone}
-              </button>
-              <button className="btn btn-primary" value={optiontwo} type="button" onClick={handlerOptionTwo}>
-                {optiontwo}
-              </button>
-            </div>
+        { !ispollalreadyselected && daysleft >= 1 && !user
+          ? (<div className="d-flex gap-4 options-button-wrap">
+            <button
+              className="btn btn-primary "
+              value={optionone}
+              type="button"
+              onClick={handlerOptionOne}
+            >
+              {optionone}
+            </button>
+            <button
+              className="btn btn-primary"
+              value={optiontwo}
+              type="button"
+              onClick={handlerOptionTwo}
+            >
+              {optiontwo}
+            </button>
+          </div>
             )
           : (
-            <div>
+          <div>
+            <div
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen1}
+              onMouseLeave={handlePopoverClose1}
+            >
+              {/* <div data-bs-toggle="popover" title={optionone}> */}
               <ProgressBar data={percentone}></ProgressBar>
+            </div>
+            <Popover
+              id="mouse-over-popover"
+              sx={{
+                pointerEvents: 'none'
+              }}
+              open={open1}
+              anchorEl={anchorEl1}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              onClose={handlePopoverClose1}
+              disableRestoreFocus
+            >
+              <Typography sx={{ p: 1 }}>{optionone}</Typography>
+            </Popover>
+            <div
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen2}
+              onMouseLeave={handlePopoverClose2}
+            >
               <ProgressBar data={percenttwo}></ProgressBar>
             </div>
+            <Popover
+              id="mouse-over-popover"
+              sx={{
+                pointerEvents: 'none'
+              }}
+              open={open2}
+              anchorEl={anchorEl2}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              onClose={handlePopoverClose2}
+              disableRestoreFocus
+            >
+              <Typography sx={{ p: 1 }}>{optiontwo}</Typography>
+            </Popover>
+          </div>
             )}
         <div className="votes-wrap d-flex justify-content-end">
           {ispollalreadyselected && !user
-            ? <span className='already-voted-text'> Already voted </span>
-            : <span></span>
-          }
-          <span className='total-votes-text'>Total votes: <span>{votes}</span></span>
+            ? (
+            <span className="already-voted-text">
+              <CheckCircleOutlineIcon className="icon-tick" /> Already voted{' '}
+            </span>
+              )
+            : (
+            <span></span>
+              )}
+          <span className="total-votes-text">
+            <PollIcon className="icon-poll" />
+            <span>Total votes : {votes}</span>
+          </span>
           {daysleft >= 1
-            ? (<span className='days-left-text'>Days left: <span>{daysleft}</span></span>)
-            : (<span className='poll-expired-text'>Poll expired</span>)}
+            ? (
+            <span className="days-left-text">
+              <TimerIcon className="icon-days" />
+              <span>Days left : {daysleft}</span>
+            </span>
+              )
+            : (
+            <span className="poll-expired-text">
+              <HighlightOffIcon className="icon-expired" />
+              Poll expired
+            </span>
+              )}
         </div>
       </div>
     </div>
