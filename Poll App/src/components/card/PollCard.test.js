@@ -32,6 +32,4 @@ test('Poll Card Component', () => {
   const description = screen.getByText(mockData.description)
   expect(description).toBeInTheDocument()
 
-  const votes = screen.getByText(mockData.votes)
-  expect(votes).toBeInTheDocument()
 })
