@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
+import './card.scss'
 
 const PollAdmin = (props) => {
   const { title, description, _id, votes, optiononevote, optiontwovote, startdate, enddate, optionone, optiontwo } = props.data
@@ -75,51 +76,38 @@ const PollAdmin = (props) => {
   return (
     <div>
         <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Are you sure want to {type} ?
-        </DialogTitle>
-        {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you Sure Want to Reset ?
-          </DialogContentText>
-        </DialogContent> */}
-        <DialogActions>
-          <Button onClick={handleYesClose}> Yes </Button>
-          <Button onClick={handleNoClose} autoFocus>
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-
-            <div className="card admin-card">
-                <div className="card-body">
-                    <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{description}</p>
-                    <div className="votes-wrap">
-                        <span style={{ fontSize: '14px', color: 'gray' }}>{optionone} : <span>{optiononevote}</span></span>
-                        <span style={{ fontSize: '14px', color: 'gray' }}>{optiontwo} : <span>{optiontwovote}</span></span>
-                        <span style={{ fontSize: '14px', color: 'gray' }}>Total Votes: <span>{votes}</span></span>
-                        <span style={{ fontSize: '14px', color: 'gray' }}>Start Date: <span>{startdate}</span></span>
-                        <span style={{ fontSize: '14px', color: 'gray' }}>End Date: <span>{enddate}</span></span>
-                    </div>
-                    <div className="btn-poll-wrap">
-                        <button className="btn btn-primary" style={{ flex: '1' }} type="button" onClick = {handlerNavigation}>Edit</button>
-                        <button className="btn btn-danger" style={{ flex: '1' }} type="button" onClick ={handleDeleteOption}>Delete</button>
-                        <button className="btn btn-success" style={{ flex: '1' }} type="button" onClick ={handleResetOption}>Reset</button>
-                    </div>
-                </div>
-            </div>
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title">
+            <DialogTitle id="alert-dialog-title">
+              Are you sure want to {type} ?
+            </DialogTitle>
+            <DialogActions>
+              <Button onClick={handleYesClose}> Yes </Button>
+              <Button onClick={handleNoClose} autoFocus> No </Button>
+            </DialogActions>
+          </Dialog>
         </div>
+        <div className="card admin-card">
+          <div className="card-body">
+            <h5 className="card-title">{title}</h5>
+            <p className="card-text">{description}</p>
+            <div className="votes-wrap-admin">
+              <span>{optionone} : <span>{optiononevote}</span></span>
+              <span>{optiontwo} : <span>{optiontwovote}</span></span>
+              <span>Total Votes: <span>{votes}</span></span>
+              <span>Start Date: <span>{startdate}</span></span>
+              <span>End Date: <span>{enddate}</span></span>
+            </div>
+            <div className="btn-admin-wrap">
+              <button className="btn btn-primary" type="button" onClick = {handlerNavigation}>Edit</button>
+              <button className="btn btn-danger" type="button" onClick ={handleDeleteOption}>Delete</button>
+              <button className="btn btn-success" type="button" onClick ={handleResetOption}>Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
   )
 }
 

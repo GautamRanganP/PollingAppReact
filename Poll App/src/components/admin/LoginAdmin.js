@@ -46,6 +46,7 @@ export default function LoginAdmin () {
       }
       return response.json()
     }).then((data) => {
+      console.log('login sucess', data)
       dispatch(setUser(data))
       const expireTime = new Date(new Date().getTime() + 60 * 60 * 1000)
       Cookies.set('user_id', data._id, { expires: expireTime })

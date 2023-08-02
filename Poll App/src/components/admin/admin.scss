@@ -1,0 +1,25 @@
+
+//admin-profile component scss
+.admin-profile-wrap{
+    width: 100% ;
+    display: flex ;
+    align-items: center ;
+    justify-content: center ;
+    flex-direction: column ; 
+    .admin-profile-avatar{
+        height: 125px ;
+        .avatar-profile{
+            width: 100px;
+            height: 100px;
+        }
+    }
+    .admin-user-input{
+        display: flex ;
+        align-items: center ;
+        justify-content: center ;
+        .user-profile-input {
+            margin:10px        
+        }
+    }
+}
+

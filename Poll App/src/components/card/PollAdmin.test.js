@@ -4,7 +4,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import PollAdmin from './PollAdmin'
 
-test('renders', () => {
+test('Poll admin Component', () => {
   const mockData = {
     _id: '64a28b09f79c97e7b3572cbd',
     title: 'Real Madrid vs Barcelona ',
@@ -20,7 +20,6 @@ test('renders', () => {
   }
 
   render(<BrowserRouter><PollAdmin data={mockData}></PollAdmin></BrowserRouter>)
-  screen.debug()
   const editPollButton = screen.getByRole('button', { name: /Edit/i })
   expect(editPollButton).toBeInTheDocument()
 

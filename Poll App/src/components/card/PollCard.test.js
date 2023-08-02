@@ -8,7 +8,7 @@ import createMockStore from 'redux-mock-store'
 
 const mockStore = createMockStore()
 
-test('renders', () => {
+test('Poll Card Component', () => {
   const mockData = {
     _id: '64a28b09f79c97e7b3572cbd',
     title: 'Real Madrid vs Barcelona',
@@ -26,12 +26,12 @@ test('renders', () => {
   const store = mockStore(initialState)
 
   render(<Provider store={store}><BrowserRouter><PollCard data={mockData}></PollCard></BrowserRouter></Provider>)
-  const editPollButton = screen.getByText(mockData.title)
-  expect(editPollButton).toBeInTheDocument()
+  const title = screen.getByText(mockData.title)
+  expect(title).toBeInTheDocument()
 
-  const deletePollButton = screen.getByText(mockData.description)
-  expect(deletePollButton).toBeInTheDocument()
+  const description = screen.getByText(mockData.description)
+  expect(description).toBeInTheDocument()
 
-  const resetPollButton = screen.getByText(mockData.votes)
-  expect(resetPollButton).toBeInTheDocument()
+  const votes = screen.getByText(mockData.votes)
+  expect(votes).toBeInTheDocument()
 })

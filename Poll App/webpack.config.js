@@ -21,9 +21,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
-      favicon: "./public/favicon.ico",
-      filename: "index.html",
-      manifest: "./public/manifest.json",
+      favicon: './public/favicon.ico',
+      manifest: './public/manifest.json'
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'

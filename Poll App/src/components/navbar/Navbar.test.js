@@ -12,6 +12,6 @@ test('Navbar Component', () => {
   const initialState = { user: null }
   const store = mockStore(initialState)
   render(<Provider store={store}><BrowserRouter><Navbar></Navbar></BrowserRouter></Provider>)
-  const editPollButton = screen.getByText(/Poll App/i)
-  expect(editPollButton).toBeInTheDocument()
+  const navBrand = screen.getByText(/Poll App/i)
+  expect(navBrand).toBeInTheDocument()
 })

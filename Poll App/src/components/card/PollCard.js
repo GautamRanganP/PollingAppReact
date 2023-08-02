@@ -2,6 +2,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProgressBar from '../progess/ProgressBar'
+import './card.scss'
 
 const PollCard = (props) => {
   const [percentone, setPercentOne] = useState(0)
@@ -117,29 +118,17 @@ const PollCard = (props) => {
   }
 
   return (
-    <div className="card" style={{ border: '5px solid rgb(227, 242, 253)' }}>
+    <div className="card">
       <div className="card-body">
         <h5 className="card-title">{title}</h5>
         <p className="card-text">{description}</p>
         {!ispollalreadyselected && daysleft >= 1 && !user
           ? (
-            <div className="d-flex gap-4">
-              <button
-                className="btn btn-primary "
-                style={{ flex: '1', fontWeight: '700' }}
-                value={optionone}
-                type="button"
-                onClick={handlerOptionOne}
-              >
+            <div className="d-flex gap-4 options-button-wrap">
+              <button className="btn btn-primary " value={optionone} type="button" onClick={handlerOptionOne}>
                 {optionone}
               </button>
-              <button
-                className="btn btn-primary"
-                style={{ flex: '1', fontWeight: '700' }}
-                value={optiontwo}
-                type="button"
-                onClick={handlerOptionTwo}
-              >
+              <button className="btn btn-primary" value={optiontwo} type="button" onClick={handlerOptionTwo}>
                 {optiontwo}
               </button>
             </div>
@@ -150,57 +139,15 @@ const PollCard = (props) => {
               <ProgressBar data={percenttwo}></ProgressBar>
             </div>
             )}
-        <div className="votes-wrap d-flex justify-content-end" style={{ flexWrap: 'wrap' }}>
+        <div className="votes-wrap d-flex justify-content-end">
           {ispollalreadyselected && !user
-            ? <span
-              style={{
-                backgroundColor: 'green',
-                borderRadius: '5px',
-                color: 'white',
-                fontWeight: '600',
-                marginBottom: '0px',
-                padding: '5px 10px'
-              }}
-            >
-              Already voted
-            </span>
+            ? <span className='already-voted-text'> Already voted </span>
             : <span></span>
           }
-          <span
-            style={{
-              fontSize: '14px',
-              color: 'gray',
-              margin: '10px',
-              marginBottom: '0px'
-            }}
-          >
-            Total votes: <span>{votes}</span>
-          </span>
+          <span className='total-votes-text'>Total votes: <span>{votes}</span></span>
           {daysleft >= 1
-            ? (
-              <span
-                style={{
-                  fontSize: '14px',
-                  color: 'gray',
-                  margin: '10px',
-                  marginBottom: '0px'
-                }}
-              >
-                Days left: <span>{daysleft}</span>
-              </span>
-              )
-            : (
-              <span
-                style={{
-                  fontSize: '14px',
-                  color: 'gray',
-                  margin: '10px',
-                  marginBottom: '0px'
-                }}
-              >
-                Poll expired
-              </span>
-              )}
+            ? (<span className='days-left-text'>Days left: <span>{daysleft}</span></span>)
+            : (<span className='poll-expired-text'>Poll expired</span>)}
         </div>
       </div>
     </div>
