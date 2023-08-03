@@ -16,7 +16,6 @@ import { Link, Typography } from '@mui/material'
 
 function App () {
   return (
-    <div className="App">
       <BrowserRouter>
         <Navbar></Navbar>
         <div className='main-content'>
@@ -44,7 +43,6 @@ function App () {
           </div>
         </footer>
       </BrowserRouter>
-    </div>
   )
 }
 
