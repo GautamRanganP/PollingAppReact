@@ -12,6 +12,7 @@ import GroupIcon from '@mui/icons-material/Group'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import Cookies from 'js-cookie'
 import { removeUser } from '../feature/UserSlice'
+import './Navbar.scss'
 
 const Navbar = () => {
   const user = useSelector((state) => { if (state.user && state.user.user) return state.user.user })
@@ -52,13 +53,13 @@ const Navbar = () => {
   }, [])
 
   return (
-        <nav className="navbar" style={{ backgroundColor: '#e3f2fd', marginBottom: '10px' }}>
+        <nav className="navbar">
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/">
-                    <GitHubIcon sx={{ marginRight: '10px', fontSize: '34px' }}/>
+                    <GitHubIcon className="brand-logo"/>
                     Poll App
                 </NavLink>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className="admin-avatar">
                     { user &&
                         <div>
                             <Button

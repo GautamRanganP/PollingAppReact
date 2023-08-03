@@ -1,0 +1,16 @@
+.navbar{
+    background-color: #e3f2fd;
+    margin-bottom: 10px; 
+    .container-fluid{
+        .navbar-brand{
+            .brand-logo{
+                margin-right: 10px;
+                font-size: 34px; 
+            }
+        }
+        .admin-avatar{
+            display: flex;
+            align-items: center; 
+        }
+    }
+}
