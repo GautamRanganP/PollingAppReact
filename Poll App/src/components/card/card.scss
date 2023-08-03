@@ -1,3 +1,11 @@
+.model-button-wrap{
+    margin: 0px 5px;
+    margin-bottom: 10px;
+    .model-button{
+        flex: 1;
+        margin: 0px 10px;
+    }
+}
 
 .card{
     border: 5px solid rgb(227, 242, 253);

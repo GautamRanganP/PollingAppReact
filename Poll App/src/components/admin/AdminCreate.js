@@ -75,7 +75,7 @@ const AdminCreate = () => {
                 <span style={{ fontSize: '24px', fontWeight: '700', width: '100%', display: 'inline-block', textAlign: 'center' }}>Create Poll</span>
                 <div className="form-group">
                     <label htmlFor="title">Title</label>
-                    <input type="text" className="form-control" id="title" placeholder="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                    <input type="text" className="form-control" id="title"  value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Description</label>
@@ -83,11 +83,11 @@ const AdminCreate = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="optionone">option 1</label>
-                    <input type="text" className="form-control" id="optionone" placeholder="optionone" value={optionone} onChange={(e) => setOptionOne(e.target.value)} required />
+                    <input type="text" className="form-control" id="optionone" value={optionone} onChange={(e) => setOptionOne(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="optiontwo">option 2</label>
-                    <input type="text" className="form-control" id="optiontwo" placeholder="optiontwo" value={optiontwo} onChange={(e) => setOptionTwo(e.target.value)} required/>
+                    <input type="text" className="form-control" id="optiontwo" value={optiontwo} onChange={(e) => setOptionTwo(e.target.value)} required/>
                 </div>
                 {/* <TextField sx={{marginBottom: '20px' }} required fullWidth name="title" label="Title" type="text" id="title" />
                 <TextareaAutosize required name="description" label="Description" type="text" id="description"></TextareaAutosize>
