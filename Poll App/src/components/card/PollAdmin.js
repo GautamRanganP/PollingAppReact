@@ -86,9 +86,11 @@ const PollAdmin = (props) => {
             <DialogTitle id="alert-dialog-title">
               Are you sure want to {type} ?
             </DialogTitle>
-            <DialogActions>
-              <Button onClick={handleYesClose}> Yes </Button>
-              <Button onClick={handleNoClose} autoFocus> No </Button>
+            <DialogActions className='model-button-wrap'>
+              <button className="btn btn-danger model-button" onClick={handleYesClose}>Yes</button>
+              <button className="btn btn-success model-button" onClick={handleNoClose}>No</button>
+              {/* <Button onClick={handleYesClose}> Yes </Button>
+              <Button onClick={handleNoClose} autoFocus> No </Button> */}
             </DialogActions>
           </Dialog>
         </div>
