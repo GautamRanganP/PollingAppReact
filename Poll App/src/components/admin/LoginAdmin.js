@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-import Link from '@mui/material/Link'
-// import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
@@ -15,27 +13,17 @@ import CircularProgess from '@mui/material/CircularProgress'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-
-function Copyright (props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Poll App
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { useDispatch } from 'react-redux'
+import { setUser } from '../feature/UserSlice'
 
 const theme = createTheme()
 
 export default function LoginAdmin () {
   const [error, setError] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const handleSubmit = (event) => {
+  const handleSubmit = React.useCallback((event) => {
     event.preventDefault()
     setError('loading')
     const data = new FormData(event.currentTarget)
@@ -46,7 +34,7 @@ export default function LoginAdmin () {
     const email = data.get('email')
     const password = data.get('password')
     const payload = { email, password }
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8082/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -58,22 +46,21 @@ export default function LoginAdmin () {
       }
       return response.json()
     }).then((data) => {
-      Cookies.set('token', data.token)
+      console.log('login sucess', data)
+      dispatch(setUser(data))
+      const expireTime = new Date(new Date().getTime() + 60 * 60 * 1000)
+      Cookies.set('user_id', data._id, { expires: expireTime })
+      Cookies.set('token', data.token, { expires: expireTime })
       setError('success')
       navigate('/admin/home')
     }).catch(() => {
       setError('failed')
     })
-  }
+  }, [])
 
   React.useEffect(() => {
     Cookies.get('token')
     const token = Cookies.get('token')
-    // if (!token)
-    // return
-    //  else {
-    //     navigate('/admin/home')
-    // }
     if (token) {
       navigate('/admin/home')
     }
@@ -148,7 +135,7 @@ export default function LoginAdmin () {
             { error === 'success' && <Alert severity='success'>Authentication Sucess</Alert> }
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   )

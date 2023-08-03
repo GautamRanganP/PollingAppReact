@@ -1,0 +1,77 @@
+
+.card{
+    border: 5px solid rgb(227, 242, 253);
+    .card-body{
+        .votes-wrap-admin{
+            display: grid;
+            overflow-x: auto;
+            white-space: nowrap;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            gap: 5px 20px;
+            margin-bottom: 10px; 
+            span{
+                font-weight: 600;
+                font-size: 14px; 
+                color: gray;
+                display: flex;
+                align-items: center;
+                .icon-admin-page{
+                    font-size: 20px;
+                    margin-right: 5px;
+                }
+            }  
+        }
+        .btn-admin-wrap{
+            display: flex; 
+            gap: 20px;
+            button{
+                flex: 1;
+            }
+        }
+        .votes-wrap{
+            flex-wrap: wrap;
+            .already-voted-text{
+                color: green;
+            }
+            .poll-expired-text{
+                color: red;
+            }
+            .already-voted-text,.poll-expired-text,.total-votes-text,.days-left-text{
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: 14px;
+                margin: 10px;
+                margin-bottom: 0px;
+            }
+            .total-votes-text,.days-left-text{
+                color: gray;
+            }
+            .icon-poll,.icon-expired,.icon-tick,.icon-days{
+                font-size: 20px;
+                margin-right: 5px ;
+            }
+        }
+        .options-button-wrap{
+            button{
+                flex: 1; 
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .card{
+        .card-body{
+            .votes-wrap-admin{ 
+                grid-template-columns: 1fr;
+            }
+            .btn-admin-wrap{
+                flex-direction: column;
+                gap: 10px;
+            }      
+        }   
+    }
+}

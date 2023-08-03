@@ -1,17 +1,48 @@
 .row.poll-card-margin{
-    margin: 40px 60px;
+    margin: 20px
 }
-@media only screen and (max-width: 767px) {
-  .row.poll-card-margin {
-    margin: 10px;
-  }
+label.form-label {
+  min-width: 80px;
 }
+
+button.btn.btn-primary,button.btn.btn-success,button.btn.btn-danger {
+  background-color: transparent;
+  border-width: 1.5px;
+  color: #007bff;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+button.btn.btn-primary {
+  color: #007bff;
+}
+button.btn.btn-success {
+  color: #28a745;
+}
+button.btn.btn-danger {
+  color: #dc3545;
+}
+button.btn.btn-primary:hover {
+  background-color:#007bff;
+}
+button.btn.btn-success:hover {
+  background-color:#28a745;
+}
+button.btn.btn-danger:hover {
+  background-color:#dc3545;
+}
+button.btn.btn-primary:hover,button.btn.btn-success:hover,button.btn.btn-danger:hover {
+  color: white;
+  opacity: 1;
+}
+
 .content-poll{
   margin: 0px 0px;
 }
 .form-content{
   margin: 40px;
 }
+
 .App-header{
   margin: 40px;
   font-size: 16px;
@@ -41,14 +72,15 @@
 }
 .form-edit{
   border-radius: 5px;
-   border: 1px solid rgb(220, 217, 217);
-   padding: 40px;
-   width: 600px;
-   margin:20px;
-   background-color: white;
+  border: 5px solid rgb(227, 242, 253);
+   /* border: 1px solid rgb(220, 217, 217); */
+  padding: 40px;
+  width: 600px;
+  margin:20px;
+  background-color: white;
 }
 .form-group{
-   margin: 10px 0px;
+   margin: 20px 0px;
 }
 .form-group>label{
   font-size: 14px;
@@ -68,37 +100,29 @@
 }
 /* admin form */
 
-
-/* poll admin */
-.votes-wrap {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
-  gap: 5px 20px;
-  margin-bottom: 10px;
+/* page */
+.poll-empty{
+  font-size: 24px;
+  font-weight: 700; 
+  text-align: center;
+  margin-top: 40px;
 }
 
-.btn-poll-wrap{
-  display: flex; 
-   gap: 20px;
-  /* bottom: -40px;
-  right: 0px;
-  position: absolute; */
+footer{
+  justify-content: flex-end;
+  min-height: 100px;
+  align-items: center;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
 }
-
-/* .card.admin-card{
-  border: 3px solid blue;
-} */
-
-@media (max-width: 768px) {
-  .votes-wrap {
-    grid-template-columns: 1fr;
-  }
-  .btn-poll-wrap{
-    flex-direction: column;
-    gap: 10px;
-  }
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-
-/* poll admin */
-
+#root{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
