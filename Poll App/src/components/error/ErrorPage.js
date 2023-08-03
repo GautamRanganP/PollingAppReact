@@ -8,7 +8,6 @@ export default function ErrorPage () {
     <Box sx={{ width: '600px', margin: '20px auto' }}>
     <Alert severity="error">
       <AlertTitle>Error 404 Page not found</AlertTitle>
-      This is an error alert — <strong>check it out!</strong>
     </Alert>
     <Button sx={{ margin: '10px 0px' }} onClick={ React.useCallback(() => navigate('/'), [])} variant='contained'>Go To Home</Button>
     </Box>
