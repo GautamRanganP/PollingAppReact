@@ -11,6 +11,7 @@ import './card.scss'
 import { Typography } from '@mui/material'
 
 const PollCard = (props) => {
+  const [option, setOption] = useState('')
   const [percentone, setPercentOne] = useState(0)
   const [percenttwo, setPercentTwo] = useState(0)
   const [ispollalreadyselected, setIsPollAlreadySelected] = useState(false)
@@ -94,19 +95,21 @@ const PollCard = (props) => {
     }
   }, [startdate, enddate])
 
-  function setVoteId (id) {
+  function setVoteId (id, option) {
     if (localStorage.getItem('poll_id')) {
       const storedIDsJSON = localStorage.getItem('poll_id')
       let storedIDsArray = []
       if (storedIDsJSON) {
         storedIDsArray = JSON.parse(storedIDsJSON)
       }
-      storedIDsArray.push(id)
+      storedIDsArray.push({ id, option })
+      // storedIDsArray.push(id)
       const updatedIDsJSON = JSON.stringify(storedIDsArray)
       localStorage.setItem('poll_id', updatedIDsJSON)
     } else {
       const initialArray = []
-      initialArray.push(id)
+      initialArray.push({ id, option })
+      // initialArray.push(id)
       const updatedIDsJSON = JSON.stringify(initialArray)
       localStorage.setItem('poll_id', updatedIDsJSON)
     }
@@ -118,9 +121,11 @@ const PollCard = (props) => {
       if (storedIDsJSON) {
         storedIDsArray = JSON.parse(storedIDsJSON)
       }
-      const isIDPresent = storedIDsArray.includes(_id)
+      const isIDPresent = storedIDsArray.find(poll => poll.id === _id)
+      // const isIDPresent = storedIDsArray.includes(_id)
       if (isIDPresent) {
         setIsPollAlreadySelected(true)
+        setOption(isIDPresent.option)
       } else {
         setIsPollAlreadySelected(false)
       }
@@ -131,16 +136,18 @@ const PollCard = (props) => {
     let count = optiononevote
     count++
     props.onEvent1(_id, count, votes)
+    setOption(optionone)
     setIsPollAlreadySelected(true)
-    setVoteId(_id)
+    setVoteId(_id, optionone)
   }
 
   const handlerOptionTwo = () => {
     let count = optiontwovote
     count++
     props.onEvent2(_id, count, votes)
+    setOption(optiontwo)
     setIsPollAlreadySelected(true)
-    setVoteId(_id)
+    setVoteId(_id, optiontwo)
   }
 
   return (
@@ -177,7 +184,7 @@ const PollCard = (props) => {
               onMouseLeave={handlePopoverClose1}
             >
               {/* <div data-bs-toggle="popover" title={optionone}> */}
-              <ProgressBar data={percentone}></ProgressBar>
+              <ProgressBar data={percentone} votedoption = {option} option = {optionone} ></ProgressBar>
             </div>
             <Popover
               id="mouse-over-popover"
@@ -205,7 +212,7 @@ const PollCard = (props) => {
               onMouseEnter={handlePopoverOpen2}
               onMouseLeave={handlePopoverClose2}
             >
-              <ProgressBar data={percenttwo}></ProgressBar>
+              <ProgressBar data={percenttwo} votedoption = {option} option = {optiontwo} ></ProgressBar>
             </div>
             <Popover
               id="mouse-over-popover"
@@ -233,8 +240,7 @@ const PollCard = (props) => {
           {ispollalreadyselected && !user
             ? (
             <span className="already-voted-text">
-              <CheckCircleOutlineIcon className="icon-tick" /> Already voted{' '}
-            </span>
+              <CheckCircleOutlineIcon className="icon-tick" /> Already voted</span>
               )
             : (
             <span></span>
