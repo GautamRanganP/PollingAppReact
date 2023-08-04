@@ -2,6 +2,8 @@ import * as React from 'react'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress'
+import DoneIcon from '@mui/icons-material/Done'
+import './ProgressBar.scss'
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 25,
@@ -17,9 +19,10 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 export default function ProgressBar (props) {
   return (
-    <Box sx={{ position: 'relative', flexGrow: 1, margin: '10px 0px' }}>
+    <Box className = {`progress-wrap ${props.votedoption === props.option ? 'active-vote' : ''}`}>
       <BorderLinearProgress variant='determinate' value={props.data} />
-      <span style={{ color: 'white', fontSize: '16px', position: 'absolute', top: '0.5px', left: '20px', fontWeight: '700' }}>{props.data}%</span>
+      <span className='vote-percent-text'>{props.data}%</span>
+      { props.votedoption === props.option && <DoneIcon className='progress-done-icon'/>}
     </Box>
   )
 }
